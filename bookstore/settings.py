@@ -23,10 +23,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '3rrxa$krizit@qhhycpd+q)o67eci5(+mhvio*sddg*&2kxz#y'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG= True
-DEBUG = False
+DEBUG= True
+# DEBUG = False
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = []
 LOGOUT_REDIRECT_URL = '/registration/login'
 LOGIN_REDIRECT_URL = '/library'
 

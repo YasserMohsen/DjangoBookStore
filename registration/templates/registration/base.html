@@ -33,7 +33,6 @@
 
     </head>
     <body>
-
       <div class="ui fixed inverted menu">
         <div class="ui container">
           <a href="#" class="header item">
@@ -52,11 +51,20 @@
 
                 </div>
             </div>
+            <div class="right item">
+                <form class="ui form" action="/library/books/">
+                      <div class="ui action left icon input">
+                            <i class="search icon"></i>
+                            <input type="text" placeholder="Search" name="search_text">
+                            <button class="ui button" type="submit">Search</button>
+                      </div>
+                </form>
+            </div>
             {% if user.is_authenticated %}
             <a href="#" class="right item">{{ user.username }}</a>
             <a href="/registration/logout" class="item">Logout</a>
             {% else %}
-            <a href="/registration/login" class="right item">Sign In</a>
+            <a href="/registration/login" class="item">Sign In</a>
             <a href="/registration/signup" class="item">Register</a>
             {% endif %}
         </div>

@@ -30,6 +30,13 @@ def index(request):
 class BookList(ListView):
     model = Book
     context_object_name = "books"
+
+    def get_queryset(self):
+        if(self.request.GET.get("search_text")):
+            return Book.objects.filter(title__icontains=self.request.GET.get("search_text"))
+        else:
+            return Book.objects.all()
+
     def get_context_data(self,**kwargs):
         context = super().get_context_data()
         return context
