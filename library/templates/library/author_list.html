@@ -1,0 +1,43 @@
+{% extends "registration/base.html" %}
+
+{% block title %}Library | Authors{% endblock %}
+{% load static %}
+{% block content %}
+    <h1>Authors</h1>
+    <table class="ui very basic collapsing celled stackable table">
+        <thead>
+            <tr>
+                <th class="six wide">Name</th>
+                <th class="two wide">Rating</th>
+                <th class="four wide">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for author in authors %}
+            <tr>
+              <td>
+                <h4 class="ui image header">
+                  <img src="/{{ author.profile }}" class="ui mini rounded image">
+                  <div class="content">
+                      <a href="/library/authors/{{ author.id }}">{{ author }}</a>
+                    </div>
+                </h4>
+              </td>
+              <td>
+                <i class="icon star yellow"></i>
+                  {{ author.rating }}
+              </td>
+                <td>
+                    <form class="author_follow" action="" method="post" id="authorfollow_{{ author.id }}"> {% csrf_token %}
+                        <input type="hidden" name="case" value="{% if author.is_followed %}remove{% else %}add{% endif %}">
+                        <input type="submit" name="author" {% if user.is_authenticated == False %}disabled{% endif %} class="status ui mini blue button {% if author.is_followed %}red{% endif %}" value="{% if author.is_followed %}Unfollow{% else %}Follow{% endif %}">
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% csrf_token %}
+    <script src="{% static '/js/crf_token_allow.js' %}"></script>
+    <script type="text/javascript" src="{% static '/js/author_follow.js' %}"></script>
+{% endblock %}

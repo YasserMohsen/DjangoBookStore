@@ -1,0 +1,144 @@
+{% extends "registration/base.html" %}
+
+{% block title %}BookStore{% endblock %}
+{% load static %}
+{% block content %}
+    <h1>Hello {{ user.username }}</h1>
+<div class="ui styled fluid accordion">
+    <div class="title">
+      <i class="dropdown icon"></i>
+        My Books
+    </div>
+    <div class="active content">
+        <div class="accordion">
+            <div class="title">
+                <i class="dropdown icon"></i>
+                Currently Reading ({{ my_books.currently_reading.count }})
+            </div>
+            <div class="content">
+                <div class="ui six doubling cards">
+                    {% for row in my_books.currently_reading %}
+                         <div class="card">
+                        <a class="image" href="/library/books/{{ row.book_id.id }}">
+                          <img src="/{{ row.book_id.cover }}" style="height: 200px">
+                        </a>
+                        <div class="content">
+                          <div class="ui small header">
+                              <a href="/library/books/{{ row.book_id.id }}">{{ row.book_id.title | title | truncatewords:5 }}</a>
+                          </div>
+                            <div class="right floated">
+                                {{ row.book_id.rating }} <i class="star icon yellow"></i>
+                            </div>
+                          <div class="meta">
+                            <a href="/library/categorys/{{ row.book_id.category_id.id }}">{{ row.book_id.category_id }}</a>
+                              <br/>
+                              <a href="/library/authors/{{ row.book_id.author_id.id }}">{{ row.book_id.author_id }}</a>
+                          </div>
+                        </div>
+                      </div>
+                    {% endfor %}
+                    </div>
+            </div>
+            <div class="title">
+                <i class="dropdown icon"></i>
+                To Be Read ({{ my_books.to_be_read.count }})
+            </div>
+            <div class="content">
+                <div class="ui six doubling cards">
+                    {% for row in my_books.to_be_read %}
+                         <div class="card">
+                        <a class="image" href="/library/books/{{ row.book_id.id }}">
+                          <img src="/{{ row.book_id.cover }}" style="height: 200px">
+                        </a>
+                        <div class="content">
+                          <div class="ui small header">
+                              <a href="/library/books/{{ row.book_id.id }}">{{ row.book_id.title | title | truncatewords:5 }}</a>
+                          </div>
+                            <div class="right floated">
+                                {{ row.book_id.rating }} <i class="star icon yellow"></i>
+                            </div>
+                          <div class="meta">
+                            <a href="/library/categorys/{{ row.book_id.category_id.id }}">{{ row.book_id.category_id }}</a>
+                              <br/>
+                              <a href="/library/authors/{{ row.book_id.author_id.id }}">{{ row.book_id.author_id }}</a>
+                          </div>
+                        </div>
+                      </div>
+                    {% endfor %}
+                    </div>
+            </div>
+            <div class="title">
+                <i class="dropdown icon"></i>
+                Read ({{ my_books.read.count }})
+            </div>
+            <div class="content">
+                <div class="ui six doubling cards">
+                    {% for row in my_books.read %}
+                         <div class="card">
+                        <a class="image" href="/library/books/{{ row.book_id.id }}">
+                          <img src="/{{ row.book_id.cover }}" style="height: 200px">
+                        </a>
+                        <div class="content">
+                          <div class="ui small header">
+                              <a href="/library/books/{{ row.book_id.id }}">{{ row.book_id.title | title | truncatewords:5 }}</a>
+                          </div>
+                            <div class="right floated">
+                                {{ row.book_id.rating }} <i class="star icon yellow"></i>
+                            </div>
+                          <div class="meta">
+                            <a href="/library/categorys/{{ row.book_id.category_id.id }}">{{ row.book_id.category_id }}</a>
+                              <br/>
+                              <a href="/library/authors/{{ row.book_id.author_id.id }}">{{ row.book_id.author_id }}</a>
+                          </div>
+                        </div>
+                      </div>
+                    {% endfor %}
+                    </div>
+            </div>
+        </div>
+    </div>
+    <div class="title">
+      <i class="dropdown icon"></i>
+        My Categories ({{ my_categories.count }})
+    </div>
+    <div class="content">
+        <ul>
+            {% for row in my_categories %}
+                <li><a href="/library/categorys/{{ row.id }}">{{ row }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="title">
+      <i class="dropdown icon"></i>
+        My Authors ({{ my_authors.count }})
+    </div>
+    <div class="content">
+        <div class="ui six doubling cards">
+            {% for row in my_authors %}
+                 <div class="card">
+                <a class="image" href="/library/authors/{{ row.author_id.id }}">
+                  <img src="/{{ row.author_id.profile }}" style="height: 200px">
+                </a>
+                <div class="content">
+                  <div class="ui small header">
+                      <a href="/library/authors/{{ row.author_id.id }}">{{ row.author_id.name | title }}</a>
+                  </div>
+                    <div class="right floated">
+                        {{ row.author_id.rating }} <i class="star icon yellow"></i>
+                    </div>
+                  <div class="meta">
+                      {{ row.author_id.books_num }} book{{ row.author_id.books_num | pluralize }}
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+            </div>
+    </div>
+</div>
+    <script type="text/javascript">
+        $(function(){
+            $('.ui.accordion')
+              .accordion();
+        })
+    </script>
+{% endblock %}

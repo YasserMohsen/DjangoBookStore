@@ -1,0 +1,56 @@
+{% extends "registration/base.html" %}
+{% load static %}
+{% block title %}Library | Book{% endblock %}
+
+{% block content %}
+    <div class="ui items">
+      <div class="item">
+        <img class="ui medium image" src="/{{ book.cover }}" style="height: 500px">
+        <div class="content">
+          <a class="header">{{ book.title | title }}</a>
+            <div>
+                <form action="/library/books/{{ book.id }}/status" method="post"> {% csrf_token %}
+                    <input type="submit" name="r" class="status ui tiny button {% if user_book.status == 'r' %}green{% endif %}" value="Read">
+                    <input type="submit" name="t" class="status ui tiny button {% if user_book.status == 't' %}green{% endif %}" value="To Be Read">
+                    <input type="submit" name="c" class="status ui tiny button {% if user_book.status == 'c' %}green{% endif %}" value="Currently Reading">
+                    <input type="submit" name="n" class="status ui tiny button {% if user_book.status == 'n' or user_book.status == None %}green{% endif %}" value="Nothing">
+                </form>
+                <br/>
+                Rate it:
+                <div class="book ui star rating" id="bookrate_{{ book.id }}" data-rating="{{ user_book.rating | floatformat:'0' }}"></div>
+                <br/>
+                Avg Rating: {{ book.rating }}
+                <i class="star icon"></i>
+            </div>
+          <div class="meta">
+            <a href="/library/authors/{{ book.author_id.id }}">{{ book.author_id }}</a>
+            <form class="author_follow" action="" method="post" id="authorfollow_{{ book.author_id.id }}"> {% csrf_token %}
+                <input type="hidden" name="case" value="{% if is_followed_author %}remove{% else %}add{% endif %}">
+                <input type="submit" name="author" {% if user.is_authenticated == False %}disabled{% endif %} class="status ui mini blue button {% if is_followed_author %}red{% endif %}" value="{% if is_followed_author %}Unfollow{% else %}Follow{% endif %}">
+            </form>
+          </div>
+          <div class="description">
+            <p>{{ book.summary }}</p>
+              <p>Language: {{ book.language }}</p>
+              <p>Country: {{ book.country }}</p>
+              <p>Link: <a href="{{ book.link }}">{{ book }}</a></p>
+              <p>No. of Pages: {{ book.pages }}</p>
+              <p>Category: <a href="/library/categorys/{{ book.category_id.id }}">{{ book.category_id }}</a>
+                <form class="category_fav" action="" method="post" id="catfav_{{ book.category_id.id }}"> {% csrf_token %}
+                    <input type="hidden" name="case" value="{% if is_favourite_category %}remove{% else %}add{% endif %}">
+                    <input type="submit" name="category" {% if user.is_authenticated == False %}disabled{% endif %} class="status ui mini orange button {% if is_favourite_category %}red{% endif %}" value="{% if is_favourite_category %}Remove From {% else %}Add To {% endif %}Favourites">
+                </form>
+              </p>
+          </div>
+          <div class="extra">
+            Additional Details
+          </div>
+        </div>
+      </div>
+    </div>
+    {% csrf_token %}
+    <script src="{% static '/js/crf_token_allow.js' %}"></script>
+    <script type="text/javascript" src="{% static '/js/rating.js' %}"></script>
+    <script type="text/javascript" src="{% static '/js/category_favourite.js' %}"></script>
+    <script type="text/javascript" src="{% static '/js/author_follow.js' %}"></script>
+{% endblock %}

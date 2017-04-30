@@ -1,0 +1,50 @@
+{% extends "registration/base.html" %}
+
+{% block title %}Library | Books{% endblock %}
+
+{% block content %}
+    <div class="ui link stackable four cards">
+    {% for book in books %}
+      <div class="card">
+        <a class="image" href="/library/books/{{ book.id }}">
+          <img src="/{{ book.cover }}" style="height: 300px">
+        </a>
+        <div class="content">
+            <div class="right floated">
+                {{ book.rating }} <i class="star icon yellow"></i>
+            </div>
+          <div class="header">
+              {{ book.title | title }}
+          </div>
+          <div class="meta">
+            <a href="/library/authors/{{ book.author_id.id }}">{{ book.author_id }}</a><br/>
+              <a href="/library/categorys/{{ book.category_id.id }}">{{ book.category_id }}</a>
+          </div>
+          <div class="description">
+            {{ book.summary | truncatewords:5 }}
+          </div>
+        </div>
+        <div class="extra content">
+          <span class="right floated">
+            At {{ book.published_at }}
+          </span>
+          <span>
+            <i class="book icon"></i>
+            {{ book.pages }} pages
+          </span>
+        </div>
+      </div>
+    {% endfor %}
+    </div>
+    <script type="text/javascript">
+    $(document).ready(function(){
+        $('.rating')
+          .rating({
+            initialRating: 0,
+            maxRating: 5
+          })
+        $('.rating')
+          .rating('disable')
+        });
+    </script>
+{% endblock %}

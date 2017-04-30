@@ -1,0 +1,67 @@
+{% extends "registration/base.html" %}
+{% load static %}
+{% block title %}Library | Category{% endblock %}
+
+{% block content %}
+    <div class="ui grid">
+      <div class="four wide column">
+          <h1>Category</h1>
+      </div>
+        <div class="nine wide column">
+        <div class="ui item">
+        <div class="content">
+          <h1 class="large header">{{ category.name | title }}</h1>
+          <div class="description">
+            <p>{{ category.description }}</p>
+          </div>
+            <br/>
+          <div class="extra">
+            Additional Details
+          </div>
+        </div>
+        </div>
+      </div>
+    <div class="three wide column">
+        <form class="category_fav" action="" method="post" id="catfav_{{ category.id }}"> {% csrf_token %}
+            <input type="hidden" name="case" value="{% if is_favourite_category %}remove{% else %}add{% endif %}">
+            <input type="submit" name="category" {% if user.is_authenticated == False %}disabled{% endif %} class="status ui right floated huge blue button {% if is_favourite_category %}red{% endif %}" value="{% if is_favourite_category %}Remove From {% else %}Add To {% endif %}Favourites">
+        </form>
+    </div>
+    </div>
+    <hr/>
+    <div class="ui six doubling cards">
+    {% for book in cat_books %}
+         <div class="card">
+        <a class="image" href="/library/books/{{ book.id }}">
+          <img src="/{{ book.cover }}" style="height: 200px">
+        </a>
+        <div class="content">
+          <div class="ui small header">
+              <a href="/library/books/{{ book.id }}">{{ book.title | title | truncatewords:5 }}</a>
+          </div>
+            <div class="right floated">
+                {{ book.rating }} <i class="star icon yellow"></i>
+            </div>
+          <div class="meta">
+            <a href="/library/authors/{{ book.author_id.id }}">{{ book.author_id }}</a>
+          </div>
+        </div>
+        <div class="extra content">
+          <span class="right floated">
+            {{ book.published_at }}
+          </span>
+          <span>
+            <i class="book icon"></i>
+            {{ book.pages }}
+          </span>
+        </div>
+      </div>
+    {% empty %}
+        <h3>No books now in this category.</h3>
+    {% endfor %}
+    </div>
+    {% csrf_token %}
+    <script src="{% static '/js/crf_token_allow.js' %}"></script>
+    <script type="text/javascript" src="{% static '/js/rating.js' %}"></script>
+    <script type="text/javascript" src="{% static '/js/category_favourite.js' %}"></script>
+{% endblock %}

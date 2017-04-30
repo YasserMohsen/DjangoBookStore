@@ -1,0 +1,500 @@
+-- MySQL dump 10.13  Distrib 5.7.18, for Linux (x86_64)
+--
+-- Host: localhost    Database: bookstore
+-- ------------------------------------------------------
+-- Server version	5.7.18-0ubuntu0.16.10.1
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Current Database: `bookstore`
+--
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `bookstore` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
+USE `bookstore`;
+
+--
+-- Table structure for table `auth_group`
+--
+
+DROP TABLE IF EXISTS `auth_group`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_group` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(80) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_group`
+--
+
+LOCK TABLES `auth_group` WRITE;
+/*!40000 ALTER TABLE `auth_group` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_group` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_group_permissions`
+--
+
+DROP TABLE IF EXISTS `auth_group_permissions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_group_permissions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `group_id` int(11) NOT NULL,
+  `permission_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `auth_group_permissions_group_id_permission_id_0cd325b0_uniq` (`group_id`,`permission_id`),
+  KEY `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` (`permission_id`),
+  CONSTRAINT `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
+  CONSTRAINT `auth_group_permissions_group_id_b120cbf9_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_group_permissions`
+--
+
+LOCK TABLES `auth_group_permissions` WRITE;
+/*!40000 ALTER TABLE `auth_group_permissions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_group_permissions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_permission`
+--
+
+DROP TABLE IF EXISTS `auth_permission`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_permission` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `content_type_id` int(11) NOT NULL,
+  `codename` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `auth_permission_content_type_id_codename_01ab375a_uniq` (`content_type_id`,`codename`),
+  CONSTRAINT `auth_permission_content_type_id_2f476e4b_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_permission`
+--
+
+LOCK TABLES `auth_permission` WRITE;
+/*!40000 ALTER TABLE `auth_permission` DISABLE KEYS */;
+INSERT INTO `auth_permission` VALUES (1,'Can add log entry',1,'add_logentry'),(2,'Can change log entry',1,'change_logentry'),(3,'Can delete log entry',1,'delete_logentry'),(4,'Can add group',2,'add_group'),(5,'Can change group',2,'change_group'),(6,'Can delete group',2,'delete_group'),(7,'Can add permission',3,'add_permission'),(8,'Can change permission',3,'change_permission'),(9,'Can delete permission',3,'delete_permission'),(10,'Can add user',4,'add_user'),(11,'Can change user',4,'change_user'),(12,'Can delete user',4,'delete_user'),(13,'Can add content type',5,'add_contenttype'),(14,'Can change content type',5,'change_contenttype'),(15,'Can delete content type',5,'delete_contenttype'),(16,'Can add session',6,'add_session'),(17,'Can change session',6,'change_session'),(18,'Can delete session',6,'delete_session'),(19,'Can add category',7,'add_category'),(20,'Can change category',7,'change_category'),(21,'Can delete category',7,'delete_category'),(22,'Can add user_ author',8,'add_user_author'),(23,'Can change user_ author',8,'change_user_author'),(24,'Can delete user_ author',8,'delete_user_author'),(25,'Can add book',9,'add_book'),(26,'Can change book',9,'change_book'),(27,'Can delete book',9,'delete_book'),(28,'Can add user_ book',10,'add_user_book'),(29,'Can change user_ book',10,'change_user_book'),(30,'Can delete user_ book',10,'delete_user_book'),(31,'Can add author',11,'add_author'),(32,'Can change author',11,'change_author'),(33,'Can delete author',11,'delete_author');
+/*!40000 ALTER TABLE `auth_permission` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_user`
+--
+
+DROP TABLE IF EXISTS `auth_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `password` varchar(128) NOT NULL,
+  `last_login` datetime(6) DEFAULT NULL,
+  `is_superuser` tinyint(1) NOT NULL,
+  `username` varchar(150) NOT NULL,
+  `first_name` varchar(30) NOT NULL,
+  `last_name` varchar(30) NOT NULL,
+  `email` varchar(254) NOT NULL,
+  `is_staff` tinyint(1) NOT NULL,
+  `is_active` tinyint(1) NOT NULL,
+  `date_joined` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_user`
+--
+
+LOCK TABLES `auth_user` WRITE;
+/*!40000 ALTER TABLE `auth_user` DISABLE KEYS */;
+INSERT INTO `auth_user` VALUES (1,'pbkdf2_sha256$36000$f2drpUUPejTr$Ci8jGFpGPxlXC9m5AImeLCPdYlF2vrz/Z/+E46abKCY=','2017-04-30 00:10:54.882283',1,'admin','','','yassermohsen101010@gmail.com',1,1,'2017-04-30 00:10:25.953430'),(2,'pbkdf2_sha256$36000$bFV3iYcCl0aQ$pHdjjhIdhetXzHmbNhbmpTdtt2lzVKVEZDpmFBEeB8s=','2017-04-30 20:18:24.106108',0,'Yasser','Yasser','Mohsen','yasser_mohsen10@yahoo.com',0,1,'2017-04-30 20:18:23.879654');
+/*!40000 ALTER TABLE `auth_user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_user_groups`
+--
+
+DROP TABLE IF EXISTS `auth_user_groups`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_user_groups` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `group_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `auth_user_groups_user_id_group_id_94350c0c_uniq` (`user_id`,`group_id`),
+  KEY `auth_user_groups_group_id_97559544_fk_auth_group_id` (`group_id`),
+  CONSTRAINT `auth_user_groups_group_id_97559544_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`),
+  CONSTRAINT `auth_user_groups_user_id_6a12ed8b_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_user_groups`
+--
+
+LOCK TABLES `auth_user_groups` WRITE;
+/*!40000 ALTER TABLE `auth_user_groups` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_user_groups` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_user_user_permissions`
+--
+
+DROP TABLE IF EXISTS `auth_user_user_permissions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_user_user_permissions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `permission_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `auth_user_user_permissions_user_id_permission_id_14a6b632_uniq` (`user_id`,`permission_id`),
+  KEY `auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm` (`permission_id`),
+  CONSTRAINT `auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
+  CONSTRAINT `auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_user_user_permissions`
+--
+
+LOCK TABLES `auth_user_user_permissions` WRITE;
+/*!40000 ALTER TABLE `auth_user_user_permissions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_user_user_permissions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_admin_log`
+--
+
+DROP TABLE IF EXISTS `django_admin_log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `django_admin_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `action_time` datetime(6) NOT NULL,
+  `object_id` longtext,
+  `object_repr` varchar(200) NOT NULL,
+  `action_flag` smallint(5) unsigned NOT NULL,
+  `change_message` longtext NOT NULL,
+  `content_type_id` int(11) DEFAULT NULL,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `django_admin_log_content_type_id_c4bce8eb_fk_django_co` (`content_type_id`),
+  KEY `django_admin_log_user_id_c564eba6_fk_auth_user_id` (`user_id`),
+  CONSTRAINT `django_admin_log_content_type_id_c4bce8eb_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`),
+  CONSTRAINT `django_admin_log_user_id_c564eba6_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_admin_log`
+--
+
+LOCK TABLES `django_admin_log` WRITE;
+/*!40000 ALTER TABLE `django_admin_log` DISABLE KEYS */;
+INSERT INTO `django_admin_log` VALUES (1,'2017-04-30 00:25:43.918623','1','J. K. Rowling',1,'[{\"added\": {}}]',11,1),(2,'2017-04-30 00:29:00.357395','2','Dan Brown',1,'[{\"added\": {}}]',11,1),(3,'2017-04-30 01:12:10.746188','1','J. K. Rowling',2,'[{\"changed\": {\"fields\": [\"profile\"]}}]',11,1),(4,'2017-04-30 01:17:34.662747','1','J. K. Rowling',2,'[{\"changed\": {\"fields\": [\"profile\"]}}]',11,1),(5,'2017-04-30 01:18:53.945303','2','Dan Brown',2,'[{\"changed\": {\"fields\": [\"profile\"]}}]',11,1),(6,'2017-04-30 01:21:57.235432','1','J. K. Rowling',2,'[{\"changed\": {\"fields\": [\"profile\"]}}]',11,1),(7,'2017-04-30 01:29:42.093817','3','Herodotus',1,'[{\"added\": {}}]',11,1),(8,'2017-04-30 01:31:37.735473','1','History',1,'[{\"added\": {}}]',7,1),(9,'2017-04-30 01:35:20.859255','2','Novel',1,'[{\"added\": {}}]',7,1),(10,'2017-04-30 01:39:15.010133','1','Harry Potter and the Prisoner of Azkaban',1,'[{\"added\": {}}]',9,1),(11,'2017-04-30 01:42:32.627601','2','Harry Potter and the Sorcerer\'s Stone',1,'[{\"added\": {}}]',9,1),(12,'2017-04-30 01:44:15.078992','3','Harry Potter and the Chamber of Secrets',1,'[{\"added\": {}}]',9,1),(13,'2017-04-30 01:48:19.198784','4','Angels and Demons',1,'[{\"added\": {}}]',9,1),(14,'2017-04-30 01:48:46.501291','3','Harry Potter and the Chamber of Secrets',2,'[{\"changed\": {\"fields\": [\"country\"]}}]',9,1),(15,'2017-04-30 01:48:52.646597','2','Harry Potter and the Sorcerer\'s Stone',2,'[{\"changed\": {\"fields\": [\"country\"]}}]',9,1),(16,'2017-04-30 01:48:58.009574','1','Harry Potter and the Prisoner of Azkaban',2,'[{\"changed\": {\"fields\": [\"country\"]}}]',9,1),(17,'2017-04-30 01:50:51.892634','5','Deception Point',1,'[{\"added\": {}}]',9,1),(18,'2017-04-30 01:54:09.030241','6','The Histories',1,'[{\"added\": {}}]',9,1);
+/*!40000 ALTER TABLE `django_admin_log` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_content_type`
+--
+
+DROP TABLE IF EXISTS `django_content_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `django_content_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `app_label` varchar(100) NOT NULL,
+  `model` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `django_content_type_app_label_model_76bd3d3b_uniq` (`app_label`,`model`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_content_type`
+--
+
+LOCK TABLES `django_content_type` WRITE;
+/*!40000 ALTER TABLE `django_content_type` DISABLE KEYS */;
+INSERT INTO `django_content_type` VALUES (1,'admin','logentry'),(2,'auth','group'),(3,'auth','permission'),(4,'auth','user'),(5,'contenttypes','contenttype'),(11,'library','author'),(9,'library','book'),(7,'library','category'),(8,'library','user_author'),(10,'library','user_book'),(6,'sessions','session');
+/*!40000 ALTER TABLE `django_content_type` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_migrations`
+--
+
+DROP TABLE IF EXISTS `django_migrations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `django_migrations` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `app` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `applied` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_migrations`
+--
+
+LOCK TABLES `django_migrations` WRITE;
+/*!40000 ALTER TABLE `django_migrations` DISABLE KEYS */;
+INSERT INTO `django_migrations` VALUES (1,'contenttypes','0001_initial','2017-04-30 00:05:25.607258'),(2,'auth','0001_initial','2017-04-30 00:05:33.924167'),(3,'admin','0001_initial','2017-04-30 00:05:35.821448'),(4,'admin','0002_logentry_remove_auto_add','2017-04-30 00:05:35.933535'),(5,'contenttypes','0002_remove_content_type_name','2017-04-30 00:05:37.151762'),(6,'auth','0002_alter_permission_name_max_length','2017-04-30 00:05:37.264069'),(7,'auth','0003_alter_user_email_max_length','2017-04-30 00:05:37.442973'),(8,'auth','0004_alter_user_username_opts','2017-04-30 00:05:37.483362'),(9,'auth','0005_alter_user_last_login_null','2017-04-30 00:05:37.989664'),(10,'auth','0006_require_contenttypes_0002','2017-04-30 00:05:38.023475'),(11,'auth','0007_alter_validators_add_error_messages','2017-04-30 00:05:38.065097'),(12,'auth','0008_alter_user_username_max_length','2017-04-30 00:05:38.550107'),(13,'library','0001_initial','2017-04-30 00:05:47.260490'),(14,'sessions','0001_initial','2017-04-30 00:05:47.951751'),(15,'library','0002_author_about','2017-04-30 00:15:02.063344'),(16,'library','0003_auto_20170430_0017','2017-04-30 00:17:52.335884'),(17,'library','0004_auto_20170430_0025','2017-04-30 00:25:10.178617'),(18,'library','0005_auto_20170430_0107','2017-04-30 01:08:01.344235'),(19,'library','0006_user_author_follow','2017-04-30 02:21:16.283872');
+/*!40000 ALTER TABLE `django_migrations` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_session`
+--
+
+DROP TABLE IF EXISTS `django_session`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `django_session` (
+  `session_key` varchar(40) NOT NULL,
+  `session_data` longtext NOT NULL,
+  `expire_date` datetime(6) NOT NULL,
+  PRIMARY KEY (`session_key`),
+  KEY `django_session_expire_date_a5c62663` (`expire_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_session`
+--
+
+LOCK TABLES `django_session` WRITE;
+/*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
+INSERT INTO `django_session` VALUES ('cgzsdv687uq5rcnr8q769h1vnzwt42xw','ZWQ5ZjZkODllNzFkNGYyMTBmY2QzNjQ0YTFkNWNlYTgzNDA4ZDY1Njp7Il9hdXRoX3VzZXJfaGFzaCI6IjRmNTY4ZDFmM2Q5ODhhZjI1NzAwZmJhNGE0YTlhMDEyM2Q0ODJlZjQiLCJfYXV0aF91c2VyX2lkIjoiMiIsIl9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIn0=','2017-05-14 20:18:24.251518');
+/*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `library_author`
+--
+
+DROP TABLE IF EXISTS `library_author`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `library_author` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `born_at` date NOT NULL,
+  `died_at` date DEFAULT NULL,
+  `contact` varchar(100) NOT NULL,
+  `about` longtext NOT NULL,
+  `profile` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `library_author`
+--
+
+LOCK TABLES `library_author` WRITE;
+/*!40000 ALTER TABLE `library_author` DISABLE KEYS */;
+INSERT INTO `library_author` VALUES (1,'J. K. Rowling','1965-06-01',NULL,'078-23432523','J K (Joanne Kathleen) Rowling was born in the summer of 1965 at Yate General Hospital in England and grew up in Chepstow, Gwent where she went to Wyedean Comprehensive. Jo left Chepstow for Exeter University, where she earned a French and Classics degree, and where her course included one year in Paris. As a postgraduate she moved to London to work at Amnesty International, doing research into human rights abuses in Francophone Africa. She started writing the Harry Potter series during a Manchester to London King\'s Cross train journey, and during the next five years, outlined the plots for each book and began writing the first novel.','static/images/authors/1493515317_jkrowling.jpg'),(2,'Dan Brown','1964-06-22',NULL,'043-212312312','Dan Brown is the #1 New York Times bestselling author of The Da Vinci Code and, previously, Digital Fortress, Deception Point, and Angels and Demons. He is a graduate of Amherst College and Phillips Exeter Academy, where he spent time as an English teacher before turning his efforts fully to writing. He lives in New England with his wife.','static/images/authors/1493515133_dan_brown.jpg'),(3,'Herodotus','0484-08-10','0425-02-04','0000000000000','Herodotus was an ancient Greek historian who was born in Halicarnassus, Caria (modern-day Bodrum, Turkey) and lived in the fifth century BCE (c. 484–425 BCE). He has been called \"The Father of History\" (first conferred by Cicero), as well as \"The Father of Lies\" (first conferred by Voltaire). He was the first historian known to collect his materials systematically, test their accuracy to a certain extent, and arrange them in a well-constructed and vivid narrative. The Histories—his masterpiece and the only work he is known to have produced—is a record of his \"inquiry\" ( a word that passed into Latin and acquired its modern meaning of \"history\"), being an investigation of the origins of the Greco-Persian Wars and including a wealth of geographical and ethnographical information. Although some of his stories were fanciful and others inaccurate, he claimed he was reporting only what had been told to him. Little is known of his personal history.','static/images/authors/1493515782_herodotus.jpg');
+/*!40000 ALTER TABLE `library_author` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `library_book`
+--
+
+DROP TABLE IF EXISTS `library_book`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `library_book` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(50) NOT NULL,
+  `published_at` date NOT NULL,
+  `summary` longtext NOT NULL,
+  `country` varchar(50) NOT NULL,
+  `link` varchar(200) NOT NULL,
+  `language` varchar(20) NOT NULL,
+  `pages` int(11) NOT NULL,
+  `cover` varchar(100) NOT NULL,
+  `author_id_id` int(11) NOT NULL,
+  `category_id_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `library_book_author_id_id_0bba8a43_fk_library_author_id` (`author_id_id`),
+  KEY `library_book_category_id_id_3badca7c_fk_library_category_id` (`category_id_id`),
+  CONSTRAINT `library_book_author_id_id_0bba8a43_fk_library_author_id` FOREIGN KEY (`author_id_id`) REFERENCES `library_author` (`id`),
+  CONSTRAINT `library_book_category_id_id_3badca7c_fk_library_category_id` FOREIGN KEY (`category_id_id`) REFERENCES `library_category` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `library_book`
+--
+
+LOCK TABLES `library_book` WRITE;
+/*!40000 ALTER TABLE `library_book` DISABLE KEYS */;
+INSERT INTO `library_book` VALUES (1,'Harry Potter and the Prisoner of Azkaban','2004-05-01','Harry Potter is lucky to reach the age of thirteen, since he has already survived the murderous attacks of the feared Dark Lord on more than one occasion. But his hopes for a quiet term concentrating on Quidditch are dashed when a maniacal mass-murderer escapes from Azkaban, pursued by the soul-sucking Dementors who guard the prison. It\'s assumed that Hogwarts is the safest place for Harry to be. But is it a coincidence that he can feel eyes watching him in the dark, and should he be taking Professor Trelawney\'s ghoulish predictions seriously?','England','https://www.goodreads.com/book/show/5.Harry_Potter_and_the_Prisoner_of_Azkaban','English',435,'static/images/books/1493516355_harry3.jpg',1,2),(2,'Harry Potter and the Sorcerer\'s Stone','1997-06-27','Harry Potter\'s life is miserable. His parents are dead and he\'s stuck with his heartless relatives, who force him to live in a tiny closet under the stairs. But his fortune changes when he receives a letter that tells him the truth about himself: he\'s a wizard. A mysterious visitor rescues him from his relatives and takes him to his new home, Hogwarts School of Witchcraft and Wizardry.\r\n\r\nAfter a lifetime of bottling up his magical powers, Harry finally feels like a normal kid. But even within the Wizarding community, he is special. He is the boy who lived: the only person to have ever survived a killing curse inflicted by the evil Lord Voldemort, who launched a brutal takeover of the Wizarding world, only to vanish after failing to kill Harry.\r\n\r\nThough Harry\'s first year at Hogwarts is the best of his life, not everything is perfect. There is a dangerous secret object hidden within the castle walls, and Harry believes it\'s his responsibility to prevent it from falling into evil hands. But doing so will bring him into contact with forces more terrifying than he ever could have imagined.','England','https://www.goodreads.com/book/show/3.Harry_Potter_and_the_Sorcerer_s_Stone','English',320,'static/images/books/1493516552_harry1.jpg',1,2),(3,'Harry Potter and the Chamber of Secrets','1999-06-02','The Dursleys were so mean and hideous that summer that all Harry Potter wanted was to get back to the Hogwarts School for Witchcraft and Wizardry. But just as he\'s packing his bags, Harry receives a warning from a strange, impish creature named Dobby who says that if Harry Potter returns to Hogwarts, disaster will strike.\r\n\r\nAnd strike it does. For in Harry\'s second year at Hogwarts, fresh torments and horrors arise, including an outrageously stuck-up new professor, Gilderoy Lockhart, a spirit named Moaning Myrtle who haunts the girls\' bathroom, and the unwanted attentions of Ron Weasley\'s younger sister, Ginny. But each of these seem minor annoyances when the real trouble begins, and someone, or something, starts turning Hogwarts students to stone. Could it be Draco Malfoy, a more poisonous rival than ever? Could it possibly be Hagrid, whose mysterious past is finally told? Or could it be the one everyone at Hogwarts most suspects: Harry Potter himself?','England','https://www.goodreads.com/book/show/15881.Harry_Potter_and_the_Chamber_of_Secrets','English',341,'static/images/books/1493516655_harr2.jpg',1,2),(4,'Angels and Demons','2006-04-01','When world-renowned Harvard symbologist Robert Langdon is summoned to a Swiss research facility to analyze a mysterious symbol—seared into the chest of a murdered physicist—he discovers evidence of the unimaginable: the resurgence of an ancient secret brotherhood known as the Illuminati ... the most powerful underground organization ever to walk the earth. The Illuminati has now surfaced to carry out the final phase of its legendary vendetta against its most hated enemy—the Catholic Church.\r\n\r\nLangdon’s worst fears are confirmed on the eve of the holy conclave, when a messenger of the Illuminati announces they have hidden an unstoppable time bomb at the very heart of Vatican City. With the countdown under way, Langdon jets to Rome to join forces with Vittoria Vetra, a beautiful and mysterious Italian scientist, to assist the Vatican in a desperate bid for survival.\r\n\r\nEmbarking on a frantic hunt through sealed crypts, dangerous catacombs, deserted cathedrals, and even the most secretive vault on earth, Langdon and Vetra follow a 400-year-old trail of ancient symbols that snakes across Rome toward the long-forgotten Illuminati lair ... a clandestine location that contains the only hope for Vatican salvation.','Italy','https://www.goodreads.com/book/show/960.Angels_Demons','English',731,'static/images/books/1493516899_ad.jpg',2,2),(5,'Deception Point','2002-11-26','When a new NASA satellite spots evidence of an astonishingly rare object buried deep in the Arctic ice, the floundering space agency proclaims a much-needed victory...a victory that has profound implications for U.S. space policy and the impending presidential election. With the Oval Office in the balance, the President dispatches White House Intelligence analyst Rachel Sexton to the Milne Ice Shelf to verify the authenticity of the find. Accompanied by a team of experts, including the charismatic academic Michael Tolland, Rachel uncovers the unthinkable: evidence of scientific trickery -- a bold deception that threatens to plunge the world into controversy.\r\n\r\nBut before Rachel can contact the President, she and Michael are attacked by a deadly team of assassins controlled by a mysterious power broker who will stop at nothing to hide the truth. Fleeing for their lives in an environment as desolate as it is lethal, their only hope for survival is to find out who is behind this masterful ploy. The truth, they will learn, is the most shocking deception of all.','Italy','https://www.goodreads.com/book/show/976.Deception_Point','English',556,'static/images/books/1493517051_dp.jpg',2,2),(6,'The Histories','2003-01-30','One of the masterpieces of classical literature, the \"Histories\" describes how a small and quarrelsome band of Greek city states united to repel the might of the Persian empire. But while this epic struggle forms the core of his work, Herodotus\' natural curiosity frequently gives rise to colorful digressions - a description of the natural wonders of Egypt; an account of European lake-dwellers; and far-fetched accounts of dog-headed men and gold-digging ants. With its kaleidoscopic blend of fact and legend, the \"Histories\" offers a compelling Greek view of the world of the fifth century BC.','England','https://www.goodreads.com/book/show/1362.The_Histories','English',716,'static/images/books/1493517249_hrr.jpg',3,1);
+/*!40000 ALTER TABLE `library_book` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `library_category`
+--
+
+DROP TABLE IF EXISTS `library_category`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `library_category` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `description` varchar(1000) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `library_category`
+--
+
+LOCK TABLES `library_category` WRITE;
+/*!40000 ALTER TABLE `library_category` DISABLE KEYS */;
+INSERT INTO `library_category` VALUES (1,'History','Related to historical books'),(2,'Novel','Adventure, mystery, and action novels');
+/*!40000 ALTER TABLE `library_category` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `library_category_users`
+--
+
+DROP TABLE IF EXISTS `library_category_users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `library_category_users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `category_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `library_category_users_category_id_user_id_fe1700ae_uniq` (`category_id`,`user_id`),
+  KEY `library_category_users_user_id_313bd9ff_fk_auth_user_id` (`user_id`),
+  CONSTRAINT `library_category_use_category_id_d87e4c04_fk_library_c` FOREIGN KEY (`category_id`) REFERENCES `library_category` (`id`),
+  CONSTRAINT `library_category_users_user_id_313bd9ff_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `library_category_users`
+--
+
+LOCK TABLES `library_category_users` WRITE;
+/*!40000 ALTER TABLE `library_category_users` DISABLE KEYS */;
+INSERT INTO `library_category_users` VALUES (4,1,1),(5,1,2),(3,2,1);
+/*!40000 ALTER TABLE `library_category_users` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `library_user_author`
+--
+
+DROP TABLE IF EXISTS `library_user_author`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `library_user_author` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rating` double NOT NULL,
+  `author_id_id` int(11) NOT NULL,
+  `user_id_id` int(11) NOT NULL,
+  `follow` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `library_user_author_author_id_id_d854ac75_fk_library_author_id` (`author_id_id`),
+  KEY `library_user_author_user_id_id_d6f13c9e_fk_auth_user_id` (`user_id_id`),
+  CONSTRAINT `library_user_author_author_id_id_d854ac75_fk_library_author_id` FOREIGN KEY (`author_id_id`) REFERENCES `library_author` (`id`),
+  CONSTRAINT `library_user_author_user_id_id_d6f13c9e_fk_auth_user_id` FOREIGN KEY (`user_id_id`) REFERENCES `auth_user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `library_user_author`
+--
+
+LOCK TABLES `library_user_author` WRITE;
+/*!40000 ALTER TABLE `library_user_author` DISABLE KEYS */;
+INSERT INTO `library_user_author` VALUES (1,0,2,1,0),(2,3,1,1,1),(3,0,3,1,1),(4,4,1,2,1);
+/*!40000 ALTER TABLE `library_user_author` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `library_user_book`
+--
+
+DROP TABLE IF EXISTS `library_user_book`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `library_user_book` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `status` varchar(1) NOT NULL,
+  `rating` double NOT NULL,
+  `book_id_id` int(11) NOT NULL,
+  `user_id_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `library_user_book_book_id_id_01f2f226_fk_library_book_id` (`book_id_id`),
+  KEY `library_user_book_user_id_id_f6f85264_fk_auth_user_id` (`user_id_id`),
+  CONSTRAINT `library_user_book_book_id_id_01f2f226_fk_library_book_id` FOREIGN KEY (`book_id_id`) REFERENCES `library_book` (`id`),
+  CONSTRAINT `library_user_book_user_id_id_f6f85264_fk_auth_user_id` FOREIGN KEY (`user_id_id`) REFERENCES `auth_user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `library_user_book`
+--
+
+LOCK TABLES `library_user_book` WRITE;
+/*!40000 ALTER TABLE `library_user_book` DISABLE KEYS */;
+INSERT INTO `library_user_book` VALUES (1,'n',3,1,1),(2,'n',5,4,1),(3,'t',4,2,1),(4,'n',1,3,1),(5,'c',1,2,2),(6,'n',5,3,2);
+/*!40000 ALTER TABLE `library_user_book` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2017-04-30 23:20:58
