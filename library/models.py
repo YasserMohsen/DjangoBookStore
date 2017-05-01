@@ -22,6 +22,25 @@ class Book(models.Model):
     category_id = models.ForeignKey('Category', on_delete = models.CASCADE)
     users = models.ManyToManyField(User, through='User_Book')
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        #users who follow this book's author
+        user_author_objects = User_Author.objects.filter(author_id=self.author_id,follow=1)
+        for user_author_object in user_author_objects:
+            BookNotification.objects.create(
+                user=user_author_object.user_id,
+                author=self.author_id,
+                book=self
+            )
+        #users whose favourite category is this book's category
+        users = self.category_id.users
+        for user in users:
+            BookNotification.objects.create(
+                user=user,
+                category=self.category_id,
+                book=self
+            )
+
     def _get_rating(self):
         rating = User_Book.objects.filter(book_id=self.id).aggregate(avg_rating=models.Avg('rating'))
         return rating['avg_rating'] or 0.0
@@ -81,3 +100,13 @@ class User_Author(models.Model):
            MaxValueValidator(5.0),
            MinValueValidator(0.0)
        ])
+
+class BookNotification(models.Model):
+    book = models.ForeignKey('Book',on_delete=models.CASCADE)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    category = models.ForeignKey('Category',on_delete=models.CASCADE, blank=True, null=True)
+    author = models.ForeignKey('Author',on_delete=models.CASCADE, blank=True, null=True)
+    state = models.CharField(max_length=1,choices=(
+        ('s','seen'),
+        ('n','not seen')
+    ), default='n')
