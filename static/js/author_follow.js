@@ -4,7 +4,7 @@
 $(function () {
     var frm = $(".author_follow")
     frm.submit(function(e){
-        var author_id = frm.attr('id').split("_")[1]
+        var author_id = $(this).attr('id').split("_")[1]
         console.log(author_id)
         var my_case = $("input[name='case']", this)
         var btn_case = $("input[name='author']", this)

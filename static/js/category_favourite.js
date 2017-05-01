@@ -4,7 +4,7 @@
 $(function () {
     var frm = $(".category_fav")
     frm.submit(function(e){
-        var cat_id = frm.attr('id').split("_")[1]
+        var cat_id = $(this).attr('id').split("_")[1]
         console.log(cat_id)
         var my_case = $("input[name='case']", this)
         var btn_case = $("input[name='category']", this)
