@@ -34,5 +34,5 @@ Type: http://localhost:8000/admin
 username: admin
 password: admin1234
 
-Enjoy :D
+Enjoy :D :D
 
